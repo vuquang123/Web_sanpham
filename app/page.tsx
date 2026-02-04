@@ -12,9 +12,9 @@ export default async function HomePage() {
     <main className="main-shell">
       <header className="header">
         <div>
-          <div className="title">Kho hang</div>
+          <div className="title">Kho hàng</div>
           <p className="subtitle">
-            Data comes from Google Sheets and refreshes automatically after a short interval.
+            Kho hang của cửa hàng gồm các mẫu iPhone Lock và iPhone Quốc tế đang có trong kho. Thông tin bao gồm id máy, tên sản phẩm, loại máy, dung lượng, pin, tình trạng và giá bán.
           </p>
         </div>
         <Link className="button" href="https://sheets.googleapis.com/" target="_blank" rel="noreferrer">

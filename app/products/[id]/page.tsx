@@ -20,8 +20,19 @@ export default async function ProductPage({ params }: Props) {
 
   const priceLabel =
     typeof product.price === 'number'
-      ? `${product.price.toLocaleString('vi-VN')} đ`
+      ? `${product.price.toLocaleString('vi-VN')} VND`
       : 'Liên hệ để báo giá';
+
+  const aiReadable = {
+    type: product.deviceType || 'Không rõ',
+    name: product.name || 'Không rõ',
+    variant: product.status || 'Không rõ',
+    capacity: product.capacity || 'Không rõ',
+    color: product.color || 'Không rõ',
+    battery: product.batteryPercent || 'Không rõ',
+    condition: product.condition || 'Không rõ',
+    price: priceLabel
+  };
 
   return (
     <main className="main-shell">
@@ -38,6 +49,20 @@ export default async function ProductPage({ params }: Props) {
         </p>
         <p className="subtitle">Tình trạng: {product.condition || 'N/A'}</p>
         <p className="muted">Trạng thái: {product.status || 'Không rõ'}</p>
+
+        <div className="card" style={{ marginTop: '1.5rem' }}>
+          <h3>Dạng AI hiểu (bắt buộc)</h3>
+          <div className="product">
+            <p>Loại sản phẩm: {aiReadable.type}</p>
+            <p>Tên sản phẩm: {aiReadable.name}</p>
+            <p>Phiên bản: {aiReadable.variant}</p>
+            <p>Dung lượng: {aiReadable.capacity}</p>
+            <p>Màu sắc: {aiReadable.color}</p>
+            <p>Pin: {aiReadable.battery}</p>
+            <p>Tình trạng máy: {aiReadable.condition}</p>
+            <p>Giá bán: {aiReadable.price}</p>
+          </div>
+        </div>
       </div>
     </main>
   );
