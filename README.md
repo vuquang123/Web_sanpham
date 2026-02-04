@@ -1,4 +1,4 @@
-# Product catalog (Next.js static export)
+# Kho hang (Next.js static export)
 
 Static Next.js site that reads products from Google Sheets at build time, exports to HTML, and is ready for Vercel.
 

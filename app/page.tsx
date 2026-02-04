@@ -12,7 +12,7 @@ export default async function HomePage() {
     <main className="main-shell">
       <header className="header">
         <div>
-          <div className="title">Product Catalog</div>
+          <div className="title">Kho hang</div>
           <p className="subtitle">
             Data comes from Google Sheets and refreshes automatically after a short interval.
           </p>
