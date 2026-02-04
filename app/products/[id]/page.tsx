@@ -18,15 +18,37 @@ export default async function ProductPage({ params }: Props) {
   const product = await getProductById(params.id);
   if (!product) return notFound();
 
+  const normalize = (value?: string) =>
+    (value || '')
+      .normalize('NFD')
+      .replace(/[^a-zA-Z0-9\s]/g, '')
+      .replace(/\s+/g, ' ')
+      .toLowerCase()
+      .trim();
+
   const priceLabel =
     typeof product.price === 'number'
       ? `${product.price.toLocaleString('vi-VN')} VND`
       : 'Liên hệ để báo giá';
 
+  const typeLabel = (() => {
+    const raw = normalize(product.name);
+    if (raw.includes('ipad')) return 'iPad';
+    if (raw.includes('iphone')) return 'iPhone';
+    return 'Không rõ';
+  })();
+
+  const variantLabel = (() => {
+    const raw = normalize(product.deviceType);
+    if (raw.includes('lock')) return 'Lock';
+    if (raw.includes('quoc') || raw.includes('qt')) return 'Quốc tế';
+    return 'Không rõ';
+  })();
+
   const aiReadable = {
-    type: product.deviceType || 'Không rõ',
+    type: typeLabel,
     name: product.name || 'Không rõ',
-    variant: product.status || 'Không rõ',
+    variant: variantLabel,
     capacity: product.capacity || 'Không rõ',
     color: product.color || 'Không rõ',
     battery: product.batteryPercent || 'Không rõ',
@@ -41,15 +63,18 @@ export default async function ProductPage({ params }: Props) {
       </Link>
 
       <div className="detail-shell">
-        <div className="badge">{product.deviceType || 'Thông tin máy'}</div>
-        <h1 className="title">{product.name}</h1>
-        <div className="price">{priceLabel}</div>
-        <p className="subtitle">
-          Dung lượng: {product.capacity || 'N/A'} · Pin: {product.batteryPercent || 'N/A'} · Màu: {product.color || 'N/A'}
-        </p>
-        <p className="subtitle">Tình trạng: {product.condition || 'N/A'}</p>
-        <p className="muted">Trạng thái: {product.status || 'Không rõ'}</p>
+        <div data-ai-ignore="true" aria-hidden="true">
+          <div className="badge">{product.deviceType || 'Thông tin máy'}</div>
+          <h1 className="title">{product.name}</h1>
+          <div className="price">{priceLabel}</div>
+          <p className="subtitle">
+            Dung lượng: {product.capacity || 'N/A'} · Pin: {product.batteryPercent || 'N/A'} · Màu: {product.color || 'N/A'}
+          </p>
+          <p className="subtitle">Tình trạng: {product.condition || 'N/A'}</p>
+          <p className="muted">Trạng thái: {product.status || 'Không rõ'}</p>
+        </div>
 
+        {/* Khối AI hiển thị rõ ràng để EasyChatAI đọc được */}
         <div className="card" style={{ marginTop: '1.5rem' }}>
           <h3>Dạng AI hiểu (bắt buộc)</h3>
           <div className="product">
