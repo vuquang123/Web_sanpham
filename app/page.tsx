@@ -3,7 +3,7 @@ import { fetchProducts } from '../lib/sheets';
 import { ProductCard } from '../components/ProductCard';
 
 export const dynamic = 'force-static';
-export const revalidate = 60; // refresh products roughly every 60s
+export const revalidate = 300; // refresh products roughly every 300s
 
 export default async function HomePage() {
   const products = await fetchProducts();
